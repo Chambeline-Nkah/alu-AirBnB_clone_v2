@@ -156,6 +156,10 @@ class HBNBCommand(cmd.Cmd):
                 value = float(value)
             else:
                 value = int(value)
+        new_instance = HBNBCommand.classes[args]()
+        storage.save()
+        print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """Help information for the create method"""

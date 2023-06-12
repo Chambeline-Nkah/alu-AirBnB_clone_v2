@@ -45,7 +45,7 @@ class BaseModel:
                     kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f"
                 )
 
-            del kwargs["__class__"]
+            kwargs.pop("__class__", None)  # Safely remove '__class__' key
             self.__dict__.update(kwargs)
 
     def __str__(self):

@@ -171,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
 
         # Create a new instance with the provided parameters
         try:
-            new_instance = HBNBCommand.classes[class_name](**kwargs)
+            new_instance = HBNBCommand.classes[class_name](kwargs)
             new_instance.save()
             print(new_instance.id)
         except Exception as e:

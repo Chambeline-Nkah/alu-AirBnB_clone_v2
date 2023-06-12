@@ -81,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
                 if pline:
                     # check for *args or **kwargs
                     if (
-                        pline[0] is "{"
+                        pline[0] == "{"
                         and pline[-1] is "}"
                         and type(eval(pline)) is dict
                     ):

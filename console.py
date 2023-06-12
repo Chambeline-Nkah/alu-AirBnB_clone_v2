@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import datetime
 
 
 class HBNBCommand(cmd.Cmd):
@@ -169,6 +170,12 @@ class HBNBCommand(cmd.Cmd):
                     continue
 
             params[key] = value
+            default_values = {
+                "created_at": datetime.datetime.now(),
+                "updated_at": datetime.datetime.now(),
+            }
+
+            params.update(default_values)
 
         new_instance = HBNBCommand.classes[class_name](**params)
         storage.save()

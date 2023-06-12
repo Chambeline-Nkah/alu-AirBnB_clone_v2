@@ -1,4 +1,4 @@
---- CREATING MYSQL USER AND GRANT THE PRIVILEGE TO HIM ---
+--creating user and grant him some privileges.
 
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';

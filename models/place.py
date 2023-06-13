@@ -10,7 +10,7 @@ import models
 
 
 class Place(BaseModel, Base):
-    """ A place to stay 
+    """ A place to stay
     city_id = ""
     user_id = ""
     name = ""

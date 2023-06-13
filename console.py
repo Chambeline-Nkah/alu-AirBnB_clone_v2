@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import models
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place

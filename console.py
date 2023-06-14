@@ -159,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
                     continue
 
             if value is not None and value != "" and \
-                hasattr(new_instance, key):
+                    hasattr(new_instance, key):
                 setattr(new_instance, key, value)
 
         print(new_instance.id)

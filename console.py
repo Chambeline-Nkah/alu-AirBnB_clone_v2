@@ -2,10 +2,11 @@
 """ Console Module """
 import cmd
 import sys
+import models
 from models.base_model import BaseModel
 from models.__init__ import storage
-from models.user import User
 from models.place import Place
+from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity

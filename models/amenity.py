@@ -7,12 +7,11 @@ from sqlalchemy import Column, String
 
 
 class Amenity(BaseModel):
-    """name = ""
-    """
+    """name = "" """
 
-__tablename__ = 'amenities'
-name = Column(String(128), nullable=False)
-if getenv("HBNB_TYPE_STORAGE") == "db":
-    place_amenities = relationship('Place',
-                                       secondary='place_amenity',
-                                       back_populates='amenities')
+    __tablename__ = "amenities"
+    name = Column(String(128), nullable=False)
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        place_amenities = relationship(
+            "Place", secondary="place_amenity", back_populates="amenities"
+        )

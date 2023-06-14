@@ -12,7 +12,8 @@
 # from models.review import Review
 import cmd
 import sys
-import models
+
+# import models
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place

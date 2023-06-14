@@ -3,8 +3,8 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 
-# env_path = find_dotenv()
-# load_dotenv(env_path)
+env_path = find_dotenv()
+load_dotenv(env_path)
 
 if os.getenv("HBNB_TYPE_STORAGE") == "db":
     from models.engine.db_storage import DBStorage

@@ -1,0 +1,16 @@
+#vs code
+.vscode/*
+!.vs code/settings.json
+!.vs code/tasks.json
+!.vs code/launchs.json
+!.vs code/extensions.json
+!.code-workspace
+
+.history/
+
+**/credentials.json
+**/client_secret.json
+**/client_secretes.json
+
+.DS_Store 
+.env

@@ -2,7 +2,7 @@
 # Prepare my web server to fulfill the requirement
 
 # Install Nginx if not already installed
-if ! command -v nginx &> /dev/null; then
+if ! [ -x "$command -v nginx" ]; then
     sudo apt-get update
     sudo apt-get install -y nginx
 fi

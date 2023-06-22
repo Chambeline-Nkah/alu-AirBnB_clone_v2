@@ -1,23 +1,19 @@
 #!/usr/bin/python3
-"""
-    a python script that compress a zip file before sending it
-"""
-
+"""Comment"""
 from fabric.api import local
 from datetime import datetime
 
 
 def do_pack():
-    """
-    Generates a .tgz archive from the contents of the web_static folder.
-
-    Returns:
-        Archive path if successfully generated, None otherwise.
-    """
-    now = datetime.now().strftime("%Y%m%d%H%M%S")
-    archive_name = "web_static_{}.tgz".format(now)
+    """Comment again"""
     local("mkdir -p versions")
-    result = local("tar -czvf versions/{} web_static".format(archive_name))
+
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    archive_path = "versions/web_static_{}.tgz".format(timestamp)
+
+    result = local("tar -cvzf {} web_static".format(archive_path))
+
     if result.failed:
         return None
-    return "versions/{}".format(archive_name)
+    else:
+        return archive_path

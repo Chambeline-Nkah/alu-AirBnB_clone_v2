@@ -33,8 +33,8 @@ def do_deploy(archive_path):
 
         # Extract archive to /data/web_static/releases/ directory
         archive_filename = os.path.basename(archive_path)
-        archive_folder = (
-            "/data/web_static/releases/" + os.path.splitext(archive_filename)[0]
+        archive_folder = "/data/web_static/releases/{}".format(
+            os.path.splitext(archive_filename)[0]
         )
         run("mkdir -p {}".format(archive_folder))
         run("tar -xzf /tmp/{} -C {}".format(archive_filename, archive_folder))

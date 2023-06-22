@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-# Fabfile to create and distribute an archive to a web server.
+"""
+Fabfile to create and distribute an archive to a web server.
+"""
+
 import os.path
 from datetime import datetime
 from fabric import env
@@ -11,7 +14,13 @@ env.hosts = ["54.174.230.101", "100.26.57.164"]
 
 
 def do_pack():
-    """create a tar gzipped archive of the directory web_static"""
+    """
+    Create a tar gzipped archive of the directory web_static.
+
+    Returns:
+        str: Path to the created archive file.
+             None if the archive creation failed.
+    """
     dt = datetime.utcnow()
     file = "versions/web_static_{}{}{}{}{}{}.tgz".format(
         dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second
@@ -26,12 +35,15 @@ def do_pack():
 
 def do_deploy(archive_path):
     """
-    Function to distribute archive to a web server
+    Distribute archive to a web server.
+
     Args:
-    archive_path (str): path to the archive to be distributed
-    Return:
-    False - if the file at the path archive_path doesn't exist
-    True - otherwise
+        archive_path (str): Path to the archive to be distributed.
+
+    Returns:
+        bool: True if the distribution is successful.
+              False if the file at the path archive_path doesn't exist
+              or if any step of the distribution process fails.
     """
     if os.path.isfile(archive_path) is False:
         return False
@@ -79,7 +91,13 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """create & distribute an archive to a web server"""
+    """
+    Create and distribute an archive to a web server.
+
+    Returns:
+        bool: True if the deployment is successful.
+              False if the archive creation or distribution process fails.
+    """
     file = do_pack()
     if file is None:
         return False

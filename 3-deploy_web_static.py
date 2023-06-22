@@ -1,104 +1,53 @@
 #!/usr/bin/python3
 """
-Fabfile to create and distribute an archive to a web server.
+Fabric script that creates and distributes an archive
+to my web servers, using the function deploy
 """
 
-import os.path
+from fabric.api import env
+from os.path import exists
+from fabric.api import local, put, run
 from datetime import datetime
-from fabric import env
-from fabric import local
-from fabric import put
-from fabric import run
 
-env.hosts = ["54.174.230.101", "100.26.57.164"]
+env.hosts = ["18.208.189.254", "54.227.30.49"]
+env.user = "ubuntu"
 
 
 def do_pack():
-    """
-    Create a tar gzipped archive of the directory web_static.
-
-    Returns:
-        str: Path to the created archive file.
-             None if the archive creation failed.
-    """
-    dt = datetime.utcnow()
-    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-        dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second
-    )
-    if os.path.isdir("versions") is False:
-        if local("mkdir -p versions").failed is True:
-            return None
-    if local("tar -cvzf {} web_static".format(file)).failed is True:
+    """Creates a .tgz archive of the web_static directory"""
+    try:
+        time = datetime.now().strftime("%Y%m%d%H%M%S")
+        archive_path = "versions/web_static_{}.tgz".format(time)
+        local("mkdir -p versions")
+        local("tar -cvzf {} web_static".format(archive_path))
+        return archive_path
+    except:
         return None
-    return file
 
 
 def do_deploy(archive_path):
-    """
-    Distribute archive to a web server.
-
-    Args:
-        archive_path (str): Path to the archive to be distributed.
-
-    Returns:
-        bool: True if the distribution is successful.
-            False if the file at the path archive_path doesn't exist
-            or if any step of the distribution process fails.
-    """
-    if os.path.isfile(archive_path) is False:
+    """Deploys archive to web servers"""
+    if not exists(archive_path):
         return False
-    file = archive_path.split("/")[-1]
-    name = file.split(".")[0]
-
-    if put(archive_path, "/tmp/{}".format(file)).failed is True:
+    try:
+        archive_name = archive_path.split("/")[-1]
+        folder_name = "/data/web_static/releases/" + archive_name.replace(".tgz", "")
+        put(archive_path, "/tmp/")
+        run("mkdir -p {}".format(folder_name))
+        run("tar -xzf /tmp/{} -C {}".format(archive_name, folder_name))
+        run("rm /tmp/{}".format(archive_name))
+        run("mv {}/web_static/* {}".format(folder_name, folder_name))
+        run("rm -rf {}/web_static".format(folder_name))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(folder_name))
+        return True
+    except:
         return False
-    if run("rm -rf /data/web_static/releases/{}/".format(name)).failed is True:
-        return False
-    if run("mkdir -p /data/web_static/releases/{}/".format(name)).failed is True:
-        return False
-    if (
-        run(
-            "tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(file, name)
-        ).failed
-        is True
-    ):
-        return False
-    if run("rm /tmp/{}".format(file)).failed is True:
-        return False
-    if (
-        run(
-            "mv /data/web_static/releases/{}/web_static/* "
-            "/data/web_static/releases/{}/".format(name, name)
-        ).failed
-        is True
-    ):
-        return False
-    if (
-        run("rm -rf /data/web_static/releases/{}/web_static".format(name)).failed
-        is True
-    ):
-        return False
-    if run("rm -rf /data/web_static/current").failed is True:
-        return False
-    if (
-        run(
-            "ln -s /data/web_static/releases/{}/ /data/web_static/current".format(name)
-        ).failed
-        is True
-    ):
-        return False
-    return True
 
 
 def deploy():
-    """
-    Create and distribute an archive to a web server.
-
-    Returns:
-        bool: True if the deployment is successful.
-              False if the archive creation or distribution process fails.
-    """
-    file = do_pack()
-    if file is None:
+    """Creates and distributes an archive to the web servers"""
+    archive_path = do_pack()
+    if archive_path is None:
         return False
-    return do_deploy(file)
+    return do_deploy(archive_path)

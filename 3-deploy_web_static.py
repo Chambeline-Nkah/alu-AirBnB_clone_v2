@@ -42,8 +42,8 @@ def do_deploy(archive_path):
 
     Returns:
         bool: True if the distribution is successful.
-              False if the file at the path archive_path doesn't exist
-              or if any step of the distribution process fails.
+            False if the file at the path archive_path doesn't exist
+            or if any step of the distribution process fails.
     """
     if os.path.isfile(archive_path) is False:
         return False

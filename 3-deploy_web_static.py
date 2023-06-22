@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-Fabric script that creates and distributes an archive
-to my web servers, using the function deploy
+Write a Fabric script that creates and
+distributes an archive to my web servers
 """
 
 from fabric.api import env
@@ -26,7 +26,7 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """Deploys archive to web servers"""
+    """do_deploy fxn"""
     if not exists(archive_path):
         return False
     try:
@@ -48,7 +48,7 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """Creates and distributes an archive to the web servers"""
+    """deploy fxn"""
     archive_path = do_pack()
     if archive_path is None:
         return False

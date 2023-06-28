@@ -26,9 +26,9 @@ def text_c(text):
 
 
 @app.route("/python/")
-@app.route("/python/(<text>)")
+@app.route("/python/<text>")
 def text_py(text="is cool"):
-    """ Display Python """ 
+    """ Display Python """
     return "Python {}".format(text.replace("_", " "))
 
 if __name__ == "__main__":

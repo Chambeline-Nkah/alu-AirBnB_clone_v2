@@ -32,7 +32,7 @@ def text_py(text="is cool"):
     return "Python {}".format(text.replace("_", " "))
 
 
-@app.route("/number/<n>")
+@app.route("/number/<int:n>")
 def num_n(n):
     """Displaying the number n"""
     return "{} is a number".format(n)

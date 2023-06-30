@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """ Write a script that starts a Flask web application,
 Web application is listening on 0.0.0.0, port 5000 """
 
